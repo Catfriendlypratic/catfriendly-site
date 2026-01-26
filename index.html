@@ -1,1 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto CatFriendly | LAMF – UNIFAA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+  <style>
+    :root{
+      --pink-700:#cf4f79;
+      --pink-600:#e26a93;
+      --pink-500:#f08fb0;
+      --pink-200:#fde3ec;
+      --ink:#2b2b2b;
+      --muted:#6f6f6f;
+      --bg:#fff7fa;
+      --shadow: 0 18px 45px rgba(0,0,0,.10);
+      --shadow-soft: 0 12px 28px rgba(0,0,0,.08);
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    /* NAV */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:linear-gradient(90deg, rgba(240,143,176,.92), rgba(226,106,147,.92));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+    }
+    .nav-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:.3px;
+      white-space:nowrap;
+    }
+    .brand-badge{
+      width:36px;height:36px;border-radius:12px;
+      background:rgba(255,255,255,.22);
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .brand small{display:block;font-weight:500;opacity:.92;margin-top:-2px}
+
+    .menu{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .menu a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      font-size:.95rem;
+      opacity:.95;
+    }
+    .menu a:hover{opacity:1;text-decoration:underline}
+
+    .btn-pill{
+      border:0;
+      background:#fff;
+      color:var(--pink-700);
+      font-weight:700;
+      padding:10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      white-space:nowrap;
+    }
+
+    /* HERO */
+    .hero-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 18px 0;
+    }
+    .hero{
+      position:relative;
+      border-radius:28px;
+      overflow:hidden;
+      min-height:360px;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(90deg, rgba(255,247,250,.92) 0%, rgba(255,247,250,.72) 44%, rgba(255,247,250,.10) 72%),
+        url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1600&q=80');
+      background-size:cover;
+      background-position:center;
+    }
+    .hero-content{
+      padding:56px 52px;
+      max-width:620px;
+    }
+    .hero h1{
+      margin:0 0 12px;
+      font-size:3rem;
+      letter-spacing:.2px;
+      color:#3a3a3a;
+    }
+    .hero h1 span{color:var(--pink-700)}
+    .hero p{
+      margin:0 0 22px;
+      color:#4b4b4b;
+      font-size:1.06rem;
+      line-height:1.7;
+    }
+    .cta{
+      display:inline-block;
+      background:linear-gradient(90deg, var(--pink-500), var(--pink-600));
+      color:#fff;
+      font-weight:700;
+      padding:12px 18px;
+      border-radius:12px;
+      text-decoration:none;
+      box-shadow: 0 14px 26px rgba(226,106,147,.35);
+    }
+    .cta:hover{filter:saturate(1.05);transform:translateY(-1px)}
+
+    /* Wave separation */
+    .wave{
+      margin-top:-10px;
+      height:70px;
+      background: radial-gradient(120% 90% at 50% 0%, #ffffff 55%, rgba(255,255,255,0) 56%);
+    }
+
+    /* SECTIONS */
+    section{scroll-margin-top:92px}
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:34px 18px;
+    }
+
+    /* Feature cards */
+    .feature-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:22px;
+    }
+    .feature{
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(240,143,176,.25);
+      border-radius:var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      padding:26px 22px;
+      text-align:center;
+    }
+    .icon{
+      width:64px;height:64px;
+      margin:0 auto 12px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(240,143,176,.35), rgba(226,106,147,.15));
+      display:grid;place-items:center;
+    }
+    .feature h3{margin:8px 0 8px;color:#3b3b3b;font-size:1.25rem}
+    .feature p{margin:0;color:var(--muted);font-size:.98rem}
+    .feature .mini-btn{
+      display:inline-block;
+      margin-top:14px;
+      padding:10px 14px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      color:#fff;
+      background:linear-gradient(90deg, var(--pink-500), var(--pink-600));
+    }
+
+    /* Title block */
+    .title{
+      text-align:center;
+      margin:26px 0 16px;
+    }
+   .title h2{
+  margin:0;
+  font-size:2.25rem;
+  color:#2b2b2b;
+}
+
+.title p{
+  margin:8px 0 0;
+  color:#6f6f6f;
+}
+
+    .divider{
+      width:120px;height:2px;margin:14px auto 0;
+      background: linear-gradient(90deg, rgba(226,106,147,0), rgba(226,106,147,.85), rgba(226,106,147,0));
+      border-radius:999px;
+    }
+
+    /* Professionals */
+    .pros{
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap:18px;
+      margin-top:22px;
+    }
+    .pro{
+      text-align:center;
+      padding:10px 6px;
+    }
+    .avatar{
+      width:110px;height:110px;
+      margin:0 auto 10px;
+      border-radius:999px;
+      background:#fff;
+      overflow:hidden;
+      border:4px solid rgba(240,143,176,.35);
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .pro strong{display:block;font-size:.96rem;color:#3a3a3a}
+    .handle{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+    .pro a{display:inline-block;margin-top:6px;color:var(--pink-700);font-weight:700;text-decoration:none}
+    .pro a:hover{text-decoration:underline}
+
+    /* Resources lists */
+    .list{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+    .item{
+      background:#fff;
+      border-radius:var(--radius-lg);
+      padding:14px 16px;
+      box-shadow: var(--shadow-soft);
+      border:1px solid rgba(240,143,176,.20);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .bullet{
+      width:12px;height:12px;border-radius:999px;
+      background:linear-gradient(180deg, var(--pink-500), var(--pink-600));
+      flex:0 0 12px;
+    }
+    .item a{
+      color:#3a3a3a;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .item a:hover{color:var(--pink-700);text-decoration:underline}
+
+    /* Cartilha cover */
+    .cover-wrap{display:flex;justify-content:center;margin-top:18px}
+    .cover{
+      width:min(420px, 100%);
+      border-radius:18px;
+      box-shadow: var(--shadow-soft);
+      border:1px solid rgba(240,143,176,.25);
+      overflow:hidden;
+    }
+    .cover img{width:100%;display:block}
+
+    /* Contact */
+    .contact-box{
+      background:rgba(255,255,255,.90);
+      border-radius:28px;
+      padding:26px 18px;
+      box-shadow: var(--shadow);
+      text-align:center;
+      border:1px solid rgba(240,143,176,.25);
+    }
+    .contact-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .contact-actions a{
+      display:inline-block;
+      min-width:180px;
+      padding:12px 18px;
+      border-radius:14px;
+      font-weight:800;
+      text-decoration:none;
+      background:linear-gradient(90deg, var(--pink-500), var(--pink-600));
+      color:#fff;
+      box-shadow: 0 14px 26px rgba(226,106,147,.30);
+    }
+
+    /* Footer */
+    footer{
+      padding:26px 18px 38px;
+      text-align:center;
+      color:#6a6a6a;
+    }
+    footer .sig{font-size:.82rem;margin-top:8px;color:#7b7b7b}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .feature-grid{grid-template-columns:1fr;}
+      .pros{grid-template-columns: repeat(3, minmax(0,1fr));}
+      .hero-content{padding:46px 26px}
+      .hero h1{font-size:2.35rem}
+      .list{grid-template-columns:1fr}
+    }
+    @media (max-width: 520px){
+      .menu{gap:10px}
+      .menu a{font-size:.88rem}
+      .btn-pill{padding:9px 12px}
+      .pros{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .avatar{width:96px;height:96px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio" aria-label="Ir para o início">
+        <span class="brand-badge" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.5 8.2 5.3 5.4c-.3-.4-.9-.1-.8.4l.6 4.1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16.5 8.2l2.2-2.8c.3-.4.9-.1.8.4l-.6 4.1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 12c0-3.3 2.7-6 6-6s6 2.7 6 6v3.2c0 2-1.3 3.8-3.2 4.4L12 21l-2.8-1.4A4.8 4.8 0 0 1 6 15.2V12Z" stroke="white" stroke-width="2"/>
+            <path d="M10 14.5c.4.6 1.1 1 2 1s1.6-.4 2-1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div>
+          Projeto CatFriendly
+          <small>LAMF • UNIFAA</small>
+        </div>
+      </a>
+
+      <div class="menu" role="navigation" aria-label="Menu">
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#cartilha">Cartilha</a>
+        <a href="#artigos">Artigos</a>
+        <a href="#videos">Vídeos</a>
+        <a href="#profissionais">Profissionais</a>
+        <a class="btn-pill" href="#contato">Contato</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-wrap" id="inicio">
+    <div class="hero" role="img" aria-label="Gato recebendo carinho">
+      <div class="hero-content">
+        <h1>Projeto <span>CatFriendly</span> LAMF</h1>
+        <p>Promovendo o bem-estar felino por meio de educação, manejo humanizado e acesso a materiais científicos para tutores, estudantes e profissionais.</p>
+        <a class="cta" href="#sobre">Saiba Mais</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave" aria-hidden="true"></div>
+
+  <!-- SOBRE (Resumo do PROEX) -->
+  <div class="section" id="sobre">
+    <div class="title">
+      <h2>Sobre o Projeto</h2>
+      <p><strong>Bem-estar felino: técnicas de manejo “Cat Friendly”</strong><br>Projeto de extensão da Liga Acadêmica de Medicina Felina (LAMF – UNIFAA).</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="feature-grid" style="margin-top:18px">
+      <div class="feature" style="text-align:left">
+        <h3 style="margin-top:0">O que é</h3>
+        <p>O Projeto Cat Friendly é uma iniciativa de extensão da Liga Acadêmica de Medicina Felina (LAMF – UNIFAA) que busca promover o bem-estar felino por meio da disseminação de práticas de manejo humanizado, baseadas no comportamento natural dos gatos e em evidências científicas.</p>
+      </div>
+
+      <div class="feature" style="text-align:left">
+        <h3 style="margin-top:0">Objetivo</h3>
+        <p>O projeto tem como objetivo conscientizar tutores, estudantes e profissionais de Medicina Veterinária sobre a importância do manejo Cat Friendly, contribuindo para a redução do estresse, prevenção de traumas e melhoria da qualidade de vida dos felinos.</p>
+      </div>
+
+      <div class="feature" style="text-align:left">
+        <h3 style="margin-top:0">Por que o Cat Friendly é tão importante?</h3>
+        <p>Na rotina clínica veterinária, o manejo Cat Friendly permite atendimentos mais seguros, precisos e humanizados, reduzindo o medo, a ansiedade e reações defensivas dos felinos, além de favorecer a correta avaliação clínica.</p>
+        <p>No ambiente domiciliar, essas práticas contribuem para um convívio mais equilibrado, respeitando o comportamento natural do gato e prevenindo alterações comportamentais. Já durante o transporte e na ida ao médico veterinário, o manejo adequado minimiza o estresse e torna a experiência menos aversiva para o animal.</p>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- FEATURE CARDS -->
+  <div class="section">
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2V4Z" stroke="#c45572" stroke-width="2"/>
+            <path d="M7 4v16" stroke="#c45572" stroke-width="2"/>
+            <path d="M10 8h6" stroke="#c45572" stroke-width="2" stroke-linecap="round"/>
+            <path d="M10 12h6" stroke="#c45572" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Cartilha CatFriendly</h3>
+        <p>Baixe nossa cartilha completa em PDF.</p>
+       <a class="mini-btn" href="./cartilha-catfriendly.pdf" target="_blank" rel="noopener noreferrer" download>
+  Baixar Cartilha
+</a>
+
+      </div>
+
+      <div class="feature">
+        <div class="icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 5h10v14H9" stroke="#c45572" stroke-width="2"/>
+            <path d="M5 9h8v10H5V9Z" stroke="#c45572" stroke-width="2"/>
+            <path d="M7 12h4" stroke="#c45572" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 15h4" stroke="#c45572" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Artigos e Revistas</h3>
+        <p>Acesse publicações e consensos sobre manejo felino.</p>
+        <a class="mini-btn" href="#artigos">Leia os Artigos</a>
+      </div>
+
+      <div class="feature">
+        <div class="icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 8l7 4-7 4V8Z" stroke="#c45572" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="#c45572" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Vídeos Educativos</h3>
+        <p>Veja vídeos sobre cuidados e comportamento felino.</p>
+        <a class="mini-btn" href="#videos">Assista aos Vídeos</a>
+      </div>
+    </div>
+  </div>
+  
+<div class="title">
+  <h2>Profissionais</h2>
+  <p><strong>Especialistas em Medicina Felina</strong><br>Conheça profissionais e projetos parceiros.</p>
+  <div class="divider"></div>
+</div>
+
+  <!-- PROFISSIONAIS -->
+ <div class="pros">
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-bruna.png" alt="Dra. Bruna Oliveira">
+    </div>
+    <strong>Dra. Bruna Oliveira</strong>
+    <span class="handle">@catvetbrunaoliveira</span>
+    <a href="https://www.instagram.com/catvetbrunaoliveira" target="_blank">Ver perfil</a>
+  </div>
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-erica.png" alt="Dra. Érica Baffa">
+    </div>
+    <strong>Dra. Érica Baffa</strong>
+    <span class="handle">@draericabaffafelinos</span>
+    <a href="https://www.instagram.com/draericabaffafelinos" target="_blank">Ver perfil</a>
+  </div>
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-isabelle.png" alt="Isabelle Guimarães">
+    </div>
+    <strong>Isabelle Guimarães</strong>
+    <span class="handle">@isaguimaraes.catvet</span>
+    <a href="https://www.instagram.com/isaguimaraes.catvet/" target="_blank">Ver perfil</a>
+  </div>
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-heloisa.png" alt="Heloisa Justen">
+    </div>
+    <strong>Heloisa Justen</strong>
+    <span class="handle">@justenheloisa</span>
+    <a href="https://www.instagram.com/justenheloisa" target="_blank">Ver perfil</a>
+  </div>
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-alexandre.png" alt="Dr. Alexandre Daniel">
+    </div>
+    <strong>Dr. Alexandre Daniel</strong>
+    <span class="handle">@alexandredaniel</span>
+    <a href="https://www.instagram.com/alexandredaniel" target="_blank">Ver perfil</a>
+  </div>
+
+  <div class="pro">
+    <div class="avatar">
+      <img src="avatar-catsacademy.png" alt="Cats Academy BR">
+    </div>
+    <strong>Cats Academy BR</strong>
+    <span class="handle">@cats_academybr</span>
+    <a href="https://www.instagram.com/cats_academybr" target="_blank">Ver perfil</a>
+  </div>
+
+</div>
+
+  <!-- CARTILHA -->
+  <div class="section" id="cartilha">
+    <div class="title">
+      <h2>Cartilha CatFriendly</h2>
+      <p>Faça o download do PDF e utilize como apoio no manejo e bem-estar felino.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="list">
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="cartilha-catfriendly.pdf" target="_blank" rel="noopener">Baixar cartilha (PDF)</a></div>
+    </div>
+
+    <div class="cover-wrap">
+      <a class="cover" href="cartilha-catfriendly.pdf" target="_blank" rel="noopener" aria-label="Abrir cartilha em PDF">
+        <img src="cartilha-capa.png" alt="Capa da cartilha Bem-estar felino: técnicas de manejo amigável">
+      </a>
+    </div>
+  </div>
+
+  <!-- ARTIGOS -->
+  <div class="section" id="artigos">
+    <div class="title">
+      <h2>Artigos, Revistas e Consensos</h2>
+      <p>Materiais selecionados para estudo e apoio à prática Cat Friendly.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="list">
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://revistas.faa.edu.br/SaberDigital/article/view/1595" target="_blank" rel="noopener">Saber Digital (FAA) — artigo</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://www.catslondrina.com.br/bem-estar/como-levar-seu-gato-no-veterinario-sem-estresse-ou-trauma-um-guia-passo-a-passo/" target="_blank" rel="noopener">Guia: levar o gato ao veterinário sem estresse</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://pubmed.ncbi.nlm.nih.gov/36259500/" target="_blank" rel="noopener">PubMed — artigo (36259500)</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://portalvet.royalcanin.com.br/saude-e-nutricao/nutricao/importancia-da-agua-para-felinos/" target="_blank" rel="noopener">Royal Canin: importância da água para felinos</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://www.petlove.com.br/dicas/lugares-que-voce-deve-fazer-carinho-gato" target="_blank" rel="noopener">Petlove: lugares para fazer carinho no gato</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://downloads.editoracientifica.com.br/articles/220910108.pdf" target="_blank" rel="noopener">PDF — Editora Científica</a></div>
+      <div class="item"><span class="bullet" aria-hidden="true"></span><a href="https://lume.ufrgs.br/handle/10183/170364" target="_blank" rel="noopener">UFRGS (Lume) — trabalho acadêmico</a></div>
+    </div>
+  </div>
+
+  <!-- VÍDEOS -->
+  <div class="section" id="videos">
+    <div class="title">
+      <h2>Vídeos Educativos</h2>
+      <p>Seleção de conteúdos em vídeo para educação e conscientização.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="feature-grid" style="margin-top:18px">
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/9Kn0288KtUQ/hqdefault.jpg" alt="Live educativa" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Live educativa (YouTube)</h3>
+        <p>Conteúdo completo sobre Cat Friendly.</p>
+        <a class="mini-btn" href="https://www.youtube.com/live/9Kn0288KtUQ?si=zd_yxEul7bs1-pw4" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/2dPt6zem6tA/hqdefault.jpg" alt="Vídeo educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Vídeo educativo</h3>
+        <p>Manejo e bem-estar felino.</p>
+        <a class="mini-btn" href="https://youtu.be/2dPt6zem6tA" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/G0vwqDj2QO0/hqdefault.jpg" alt="Vídeo educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Vídeo educativo</h3>
+        <p>Conceitos Cat Friendly e rotina.</p>
+        <a class="mini-btn" href="https://youtu.be/G0vwqDj2QO0" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/WNRA0q6lA7o/hqdefault.jpg" alt="Vídeo educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Vídeo educativo</h3>
+        <p>Cuidados e comportamento felino.</p>
+        <a class="mini-btn" href="https://youtu.be/WNRA0q6lA7o" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/PRbbFsD_-88/hqdefault.jpg" alt="Shorts educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Shorts (YouTube)</h3>
+        <p>Dica rápida sobre manejo.</p>
+        <a class="mini-btn" href="https://www.youtube.com/shorts/PRbbFsD_-88?si=R6grKgqFLiaLKAYA" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/PYQ6gUa61fE/hqdefault.jpg" alt="Shorts educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Shorts (YouTube)</h3>
+        <p>Dica rápida para tutores.</p>
+        <a class="mini-btn" href="https://youtube.com/shorts/PYQ6gUa61fE?si=UmJ-MuDHkogPEn6H" target="_blank" rel="noopener">Assistir</a>
+      </div>
+
+      <div class="feature">
+        <div style="border-radius:18px; overflow:hidden; box-shadow: var(--shadow-soft); border:1px solid rgba(240,143,176,.20)">
+          <img src="https://i.ytimg.com/vi/dKxwvUcLCz4/hqdefault.jpg" alt="Shorts educativo" style="width:100%; display:block">
+        </div>
+        <h3 style="margin-top:16px">Shorts (YouTube)</h3>
+        <p>Conteúdo rápido e direto.</p>
+        <a class="mini-btn" href="https://www.youtube.com/shorts/dKxwvUcLCz4?si=quZ4ilohD18w5fc8" target="_blank" rel="noopener">Assistir</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTATO -->
+  <div class="section" id="contato">
+    <div class="title">
+      <h2>Contato</h2>
+      <p><strong>Fale Conosco</strong><br>Entre em contato conosco exclusivamente via Instagram.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="contact-box">
+      <p style="margin:0;color:var(--muted)">A forma de contato é pelo Instagram (Direct).</p>
+      <div class="contact-actions">
+        <a href="https://www.instagram.com/lamf.unifaa" target="_blank" rel="noopener">Enviar Direct</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Projeto CatFriendly — Liga Acadêmica de Medicina Felina (LAMF) | UNIFAA</div>
+    <div class="sig">Site desenvolvido por Leandra A. Lima</div>
+  </footer>
+
+</body>
+</html>
